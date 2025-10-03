@@ -1,12 +1,3 @@
-"""
-Product-related Pydantic schemas.
-
-This module contains all schemas related to product management:
-- Product CRUD operations
-- Product filtering and pagination
-- Product responses with relationships
-"""
-
 from decimal import Decimal
 from typing import Optional, List
 from pydantic import BaseModel, Field, ConfigDict

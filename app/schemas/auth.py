@@ -1,12 +1,3 @@
-"""
-Authentication-related Pydantic schemas.
-
-This module contains all schemas related to authentication:
-- JWT tokens
-- Token validation
-- Authentication responses
-"""
-
 from typing import Optional
 from pydantic import BaseModel
 

@@ -1,12 +1,3 @@
-"""
-User-related Pydantic schemas.
-
-This module contains all schemas related to user management:
-- User registration and authentication
-- User profile management
-- User responses
-"""
-
 from typing import Optional
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 

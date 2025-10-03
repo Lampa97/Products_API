@@ -1,9 +1,3 @@
-"""
-Base schemas and mixins.
-
-This module contains common base classes and mixins used across other schemas.
-"""
-
 from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
