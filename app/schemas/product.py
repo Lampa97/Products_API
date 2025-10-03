@@ -1,6 +1,7 @@
 from decimal import Decimal
-from typing import Optional, List
-from pydantic import BaseModel, Field, ConfigDict
+from typing import List, Optional
+
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.schemas.base import TimestampMixin
 from app.schemas.user import UserResponse
@@ -58,6 +59,21 @@ class PaginationParams(BaseModel):
     """Schema for pagination parameters."""
     page: int = Field(1, ge=1, description="Page number")
     page_size: int = Field(20, ge=1, le=100, description="Items per page")
+    
+    @property
+    def skip(self) -> int:
+        """Calculate offset for database query."""
+        return (self.page - 1) * self.page_size
+    
+    @property
+    def limit(self) -> int:
+        """Get limit for database query."""
+        return self.page_size
+    
+    @property
+    def per_page(self) -> int:
+        """Alias for page_size."""
+        return self.page_size
 
 
 class ProductListResponse(BaseModel):
