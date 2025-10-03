@@ -19,6 +19,7 @@ dependencies = [
     "python-jose[cryptography]>=3.3.0",
     "redis>=5.0.1",
     "sqlalchemy>=2.0.43",
+    "jose>=1.0.0",
 ]
 
 [dependency-groups]

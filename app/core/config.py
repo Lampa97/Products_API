@@ -1,4 +1,5 @@
 from typing import List
+
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -9,7 +10,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env", 
         env_file_encoding="utf-8",
-        case_sensitive=False
+        case_sensitive=False,
+        extra="ignore"  # Игнорируем дополнительные поля из .env
     )
     
     # Database settings
@@ -45,6 +47,11 @@ class Settings(BaseSettings):
     external_api_url: str = Field(
         default="https://dummyjson.com/products",
         description="External API URL for products synchronization"
+    )
+    
+    external_api_provider: str = Field(
+        default="dummyjson",
+        description="External API provider type (dummyjson, custom, etc.)"
     )
     
     default_page_size: int = Field(
