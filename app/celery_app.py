@@ -4,12 +4,7 @@ from celery.schedules import crontab
 from app.core.config import settings
 
 # Create Celery app
-celery_app = Celery(
-    "products_api",
-    broker=settings.redis_url,
-    backend=settings.redis_url,
-    include=["app.tasks"]
-)
+celery_app = Celery("products_api", broker=settings.redis_url, backend=settings.redis_url, include=["app.tasks"])
 
 # Celery configuration
 celery_app.conf.update(

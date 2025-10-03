@@ -32,6 +32,8 @@ lint = [
     "flake8>=7.3.0",
     "isort>=6.1.0",
     "mypy>=1.18.2",
+    "types-passlib>=1.7.7.20250602",
+    "types-python-jose>=3.5.0.20250531",
 ]
 
 [tool.black]
@@ -54,6 +56,16 @@ disallow_untyped_defs = true
 no_implicit_optional = true
 warn_return_any = true
 exclude = '.venv'
+
+[[tool.mypy.overrides]]
+module = [
+    "celery.*",
+    "celery.schedules.*",
+    "celery.result.*",
+    "jose.*",
+    "passlib.*"
+]
+ignore_missing_imports = true
 
 [tool.isort]
 line_length = 119

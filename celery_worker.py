@@ -13,26 +13,28 @@ from pathlib import Path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-from app.celery_app import celery_app
 # Import tasks to register them with Celery
 import app.tasks
+from app.celery_app import celery_app
 
 
-def main():
+def main() -> None:
     """Start Celery worker."""
     # Set default log level
     log_level = os.getenv("CELERY_LOG_LEVEL", "info")
-    
+
     # Start worker
-    celery_app.worker_main([
-        "worker",
-        "--loglevel=" + log_level,
-        "--concurrency=4",
-        "--prefetch-multiplier=1",
-        "--without-gossip",
-        "--without-mingle",
-        "--without-heartbeat",
-    ])
+    celery_app.worker_main(
+        [
+            "worker",
+            "--loglevel=" + log_level,
+            "--concurrency=4",
+            "--prefetch-multiplier=1",
+            "--without-gossip",
+            "--without-mingle",
+            "--without-heartbeat",
+        ]
+    )
 
 
 if __name__ == "__main__":

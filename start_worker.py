@@ -9,14 +9,9 @@ import subprocess
 import sys
 
 if __name__ == "__main__":
-    cmd = [
-        sys.executable, "-m", "celery", 
-        "-A", "app.celery_app", 
-        "worker", 
-        "--loglevel=info"
-    ]
-    
+    cmd = [sys.executable, "-m", "celery", "-A", "app.celery_app", "worker", "--loglevel=info"]
+
     print("Starting Celery worker...")
     print(f"Command: {' '.join(cmd)}")
-    
+
     subprocess.run(cmd)
