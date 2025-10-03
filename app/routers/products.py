@@ -1,9 +1,8 @@
-from typing import Any, List
+from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
-from sqlalchemy.orm import selectinload
 
 from app.db.database import get_db
 from app.models.models import Product, User
@@ -11,9 +10,9 @@ from app.schemas.product import (
     ProductCreate, 
     ProductUpdate, 
     ProductResponse, 
-    ProductListResponse
+    ProductListResponse,
+    PaginationParams
 )
-from app.schemas.base import PaginationParams
 from app.services.auth import get_current_active_user, require_admin
 
 
@@ -37,7 +36,10 @@ async def create_product(
     Returns:
         Created product data
     """
-    db_product = Product(**product_data.model_dump())
+    # Create product with owner_id from current user
+    product_dict = product_data.model_dump()
+    product_dict['owner_id'] = current_user.id
+    db_product = Product(**product_dict)
     
     db.add(db_product)
     await db.commit()
@@ -100,11 +102,11 @@ async def get_products(
     products = result.scalars().all()
     
     return ProductListResponse(
-        items=products,
+        products=products,
         total=total,
         page=pagination.page,
-        per_page=pagination.per_page,
-        pages=((total - 1) // pagination.per_page) + 1 if total > 0 else 0
+        page_size=pagination.page_size,
+        total_pages=((total - 1) // pagination.page_size) + 1 if total > 0 else 0
     )
 
 
